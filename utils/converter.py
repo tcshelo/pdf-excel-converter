@@ -1,9 +1,8 @@
-# utils/converter.py
 import pdfplumber
 import pandas as pd
 import io
 
-def convert_pdf_to_excel(pdf_file):
+def convert_pdf_to_excel(pdf_file, lang="PT"):
     """
     Processa um arquivo PDF buscando tabelas, identifica células mescladas horizontais
     reais para aplicar o merge no Excel e exporta formatado em cinza escuro.
@@ -14,7 +13,10 @@ def convert_pdf_to_excel(pdf_file):
         # Abre o arquivo PDF com pdfplumber
         with pdfplumber.open(pdf_file) as pdf:
             if not pdf.pages:
-                raise ValueError("O arquivo PDF está vazio ou não possui páginas legíveis.")
+                if lang == "EN":
+                    raise ValueError("The PDF file is empty or has no readable pages.")
+                else:
+                    raise ValueError("O arquivo PDF está vazio ou não possui páginas legíveis.")
             
             for page in pdf.pages:
                 table = page.extract_table()
@@ -22,10 +24,10 @@ def convert_pdf_to_excel(pdf_file):
                     all_data.extend(table)
                     
         if not all_data:
-            raise ValueError(
-                "Nenhuma tabela estruturada foi identificada neste PDF. "
-                "Certifique-se de que o documento contém tabelas em texto selecionável e não imagens escaneadas."
-            )
+            if lang == "EN":
+                raise ValueError("No structured tables were identified in this PDF. Make sure the document contains tables in selectable text and not scanned images.")
+            else:
+                raise ValueError("Nenhuma tabela estruturada foi identificada neste PDF. Certifique-se de que o documento contém tabelas em texto selecionável e não imagens escaneadas.")
             
         # Converte os dados brutos em DataFrame
         df = pd.DataFrame(all_data)
@@ -42,15 +44,17 @@ def convert_pdf_to_excel(pdf_file):
             
         # Sanitiza dados para evitar injeção de fórmulas no Excel
         for col in df.columns:
-            df[col] = df[col].apply(lambda x: f"'{x}" if isinstance(x, str) and x.startswith('=') else x)
+            df[col] = df[col].apply(
+                lambda x: f"'{x}" if isinstance(x, str) and x.startswith('=') else x
+            )
 
         # Salva os dados usando XlsxWriter com mesclagem real e cinza escuro
         output = io.BytesIO()
         with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
-            df.to_excel(writer, index=False, header=False, sheet_name='Relatório')
+            df.to_excel(writer, index=False, header=False, sheet_name='Relatório' if lang == "PT" else 'Report')
             
             workbook = writer.book
-            worksheet = writer.sheets['Relatório']
+            worksheet = writer.sheets['Relatório' if lang == "PT" else 'Report']
             
             # Formato Cinza Escuro Elegante (Slate 700) para o Cabeçalho Principal
             header_format = workbook.add_format({
@@ -135,9 +139,17 @@ def convert_pdf_to_excel(pdf_file):
                 
         return output.getvalue()
 
-    except pdfplumber.pdfminer.pdfparser.PDFSyntaxError:
-        raise ValueError("O arquivo PDF está corrompido, danificado ou com formato inválido.")
+    except ValueError as error:
+        raise error
     except Exception as error:
-        if isinstance(error, ValueError):
-            raise error
-        raise RuntimeError(f"Ocorreu um erro interno ao processar o arquivo: {str(error)}")
+        error_message = str(error).lower()
+        if "syntax" in error_message or "pdf" in error_message or "format" in error_message:
+            if lang == "EN":
+                raise ValueError("The PDF file is corrupted, damaged, or has an invalid format.")
+            else:
+                raise ValueError("O arquivo PDF está corrompido, danificado ou com formato inválido.")
+        
+        if lang == "EN":
+            raise RuntimeError(f"An internal error occurred while processing the file: {str(error)}")
+        else:
+            raise RuntimeError(f"Ocorreu um erro interno ao processar o arquivo: {str(error)}")
