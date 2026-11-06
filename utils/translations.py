@@ -1,6 +1,6 @@
 TRANSLATIONS = {
     "PT": {
-        "title": "📊 Conversor de PDF para Excel",
+        "title": " Conversor de PDF para Excel",
         "subtitle": "Selecione o relatório em PDF para gerar a planilha formatada",
         "uploader_label": "Arraste ou selecione o arquivo PDF",
         "uploader_help": "Selecione um arquivo PDF que contenha tabelas.",
@@ -13,7 +13,7 @@ TRANSLATIONS = {
         "reset_btn": "🔄 Fazer Nova Conversão",
     },
     "EN": {
-        "title": "📊 PDF to Excel Converter",
+        "title": " PDF to Excel Converter",
         "subtitle": "Select the PDF report to generate the formatted spreadsheet",
         "uploader_label": "Drag and drop or select the PDF file",
         "uploader_help": "Select a PDF file containing tables.",
