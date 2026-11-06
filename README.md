@@ -1,4 +1,4 @@
-# 📊 Conversor de PDF para Excel / PDF to Excel Converter
+# 📄 Conversor de PDF para Excel / PDF to Excel Converter
 
 [Português](#português) | [English](#english)
 
@@ -7,43 +7,43 @@
 <a name="português"></a>
 ## 🇧🇷 Português
 
-Aplicação desktop moderna desenvolvida em **Python** e **Streamlit** para extrair tabelas de arquivos PDF e convertê-las em planilhas do Excel (`.xlsx`) limpas e formatadas.
+Aplicação moderna desenvolvida em **Python** e **Streamlit** para extrair tabelas de arquivos PDF e convertê-las em planilhas do Excel (`.xlsx`) limpas e formatadas.
 
 ### ✨ Funcionalidades
 
 - **Extração Inteligente:** Processa tabelas a partir de texto selecionável em PDF utilizando o `pdfplumber`.
-- **Tratamento de Células Mescladas:** Identifica e unifica blocos horizontais (como cabeçalhos de seções ou grupos) aplicando o `merge_range` real no Excel para evitar valores duplicados ou `NaN`.
-- **Design Corporativo:** Formatação profissional automática com cabeçalhos em cinza escuro (`#334155`), texto em branco, margens e ajuste automático da largura das colunas.
-- **Interface Estilo Desktop:** Layout minimalista focado na produtividade, ocultando elementos web padrão e gerenciando estados de forma fluida.
-- **Fluxo de Reinicialização:** Botão dinâmico para efetuar novas conversões com um único clique.
+- **Tratamento de Células Mescladas:** Identifica e unifica blocos horizontais (como cabeçalhos de seções) aplicando o `merge_range` real no Excel.
+- **Suporte Bilíngue (i18n):** Alternância fluida entre Português e Inglês diretamente na interface.
+- **Design Corporativo & Minimalista:** Formatação profissional automática com cabeçalhos estilizados, ajuste de colunas, card de cabeçalho dedicado e tema limpo.
+- **Fluxo de Erros Resiliente:** Tratamento inteligente de falhas com ocultação automática de botões inválidos e botão dinâmico para novas conversões.
 
 ### 🛠️ Tecnologias Utilizadas
 
 - **Python 3.11+**
-- **Streamlit** (Interface gráfica)
+- **Streamlit** (Interface gráfica reativa)
 - **Pandas** (Manipulação e estruturação de dados)
-- **Pdfplumber** (Extração de tabelas de PDF)
-- **XlsxWriter** (Geração e estilização avançada de arquivos Excel)
+- **Pdfplumber** (Extração avançada de tabelas de PDF)
+- **XlsxWriter** (Geração e estilização de planilhas)
 
 ---
 
 <a name="english"></a>
 ## 🇺🇸 English
 
-A modern desktop application built with **Python** and **Streamlit** to extract tables from PDF files and convert them into clean and formatted Excel spreadsheets (`.xlsx`).
+A modern application built with **Python** and **Streamlit** to extract tables from PDF files and convert them into clean and formatted Excel spreadsheets (`.xlsx`).
 
 ### ✨ Features
 
 - **Smart Extraction:** Processes tables from selectable text in PDF files using `pdfplumber`.
-- **Merged Cell Support:** Detects and unifies horizontal blocks (such as section or group headers) using native Excel `merge_range` to prevent duplicate values or `NaN` entries.
-- **Corporate Design:** Automatic professional styling with dark gray headers (`#334155`), white text, grid lines, and auto-adjusted column widths.
-- **Desktop-Style UI:** Minimalist layout built for productivity, hiding standard web elements and managing application state seamlessly.
-- **Reset Workflow:** Dynamic button to start a new conversion in a single click.
+- **Merged Cell Support:** Detects and unifies horizontal blocks using native Excel `merge_range` to prevent duplicate values.
+- **Bilingual Support (i18n):** Seamless language switching between Portuguese and English directly on the interface.
+- **Corporate & Minimalist Design:** Professional auto-styling, clean typography, dedicated header card, and optimized layout.
+- **Resilient Error Handling:** Intelligent failure recovery with dynamic state management and instant retry options.
 
 ### 🛠️ Built With
 
 - **Python 3.11+**
-- **Streamlit** (User Interface)
+- **Streamlit** (Reactive User Interface)
 - **Pandas** (Data manipulation and structuring)
 - **Pdfplumber** (PDF table extraction)
 - **XlsxWriter** (Advanced Excel file generation and styling)
